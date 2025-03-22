@@ -5,38 +5,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Forex Backtest Randomizer</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js')
+                .then(() => console.log("Service Worker Registered"))
+                .catch(error => console.log("Service Worker Registration Failed:", error));
+        }
+
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            document.getElementById('installBtn').style.display = 'block';
+        });
+
+        function installPWA() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then(choiceResult => {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('User accepted the PWA installation');
+                    }
+                    deferredPrompt = null;
+                });
+            }
+        }
+    </script>
 </head>
 <body>
     <div class="container">
-        <h1>📈 Forex Backtest Randomizer</h1>
-        
-        <div class="input-group">
-            <label for="startDate">Start Date:</label>
-            <input type="date" id="startDate">
-        </div>
+        <h1>Forex Backtest Randomizer</h1>
 
-        <div class="input-group">
-            <label for="endDate">End Date:</label>
-            <input type="date" id="endDate">
-        </div>
+        <label for="startDate">Start Date:</label>
+        <input type="date" id="startDate">
 
-        <div class="input-group">
-            <label for="minDuration">Min Duration (days):</label>
-            <input type="number" id="minDuration" value="1">
-        </div>
+        <label for="endDate">End Date:</label>
+        <input type="date" id="endDate">
 
-        <div class="input-group">
-            <label for="maxDuration">Max Duration (days):</label>
-            <input type="number" id="maxDuration" value="30">
-        </div>
+        <label for="minDuration">Minimum Duration (days):</label>
+        <input type="number" id="minDuration" value="1">
 
-        <button onclick="generateRandom()">🎲 Generate</button>
+        <label for="maxDuration">Maximum Duration (days):</label>
+        <input type="number" id="maxDuration" value="30">
+
+        <button onclick="generateRandom()">Generate</button>
 
         <div id="result">
-            <p><span>📅 Random Date:</span> <span id="randomDate"></span></p>
-            <p><span⏳> Random Duration:</span> <span id="randomDuration"></span> days</p>
-            <p><span>💱 Random Forex Pair:</span> <span id="randomPair"></span></p>
+            <p id="randomDate">Random Date: </p>
+            <p id="randomDuration">Random Duration: </p>
+            <p id="randomPair">Forex Pair: </p>
         </div>
+
+        <button id="installBtn" onclick="installPWA()" style="display: none;">Install App</button>
     </div>
 
     <script src="script.js"></script>
