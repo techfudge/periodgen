@@ -1,6 +1,6 @@
 {
-    "name": "Forex Backtest Randomizer",
-    "short_name": "Forex Randomizer",
+    "name": "PipPilot",
+    "short_name": "PipPilot",
     "description": "Generate random forex backtesting dates and trading pairs.",
     "start_url": "index.html",
     "display": "standalone",
