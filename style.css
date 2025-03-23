@@ -1,4 +1,3 @@
-/* General styles */
 body {
     font-family: 'Poppins', sans-serif;
     background: #1c1c1c;
@@ -8,9 +7,10 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
+    padding: 20px;
 }
 
-/* Container Card */
+
 .container {
     background: #2a2a2a;
     padding: 25px;
@@ -26,7 +26,7 @@ h1 {
     margin-bottom: 15px;
 }
 
-/* Input Styling */
+
 .input-group {
     margin: 10px 0;
     text-align: left;
@@ -53,7 +53,7 @@ input:focus {
     border: 1px solid #00d4ff;
 }
 
-/* Button */
+
 button {
     width: 100%;
     margin-top: 15px;
@@ -71,13 +71,116 @@ button:hover {
     background: linear-gradient(135deg, #007bff, #0056b3);
 }
 
-/* Results */
+.dropdown {
+    position: relative;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.dropdown-btn {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    background: linear-gradient(135deg, #00d4ff, #007bff);
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    text-align: left;
+}
+
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    left: 0;
+    width: 100%;
+    background: #2a2a2a;
+    border-radius: 6px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    padding: 10px;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 10;
+}
+
+
+.dropdown-content.show {
+    display: block;
+}
+
+
+.checkbox-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    background: #3b3b3b;
+    padding: 8px;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+    cursor: pointer;
+    font-size: 14px;
+    position: relative;
+}
+
+.checkbox-container:hover {
+    background: #007bff;
+    color: white;
+}
+
+
+.checkbox-container input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+
+.checkbox-container .custom-checkbox {
+    width: 18px;
+    height: 18px;
+    border: 2px solid #00d4ff;
+    border-radius: 4px;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 8px;
+    transition: all 0.3s ease;
+}
+
+
+.checkbox-container input:checked + .custom-checkbox {
+    background-color: #00d4ff;
+    border-color: #0056b3;
+}
+
+
+.checkbox-container input:checked + .custom-checkbox::after {
+    content: "✔";
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+
 #result {
     margin-top: 20px;
     padding: 10px;
     background: #3b3b3b;
     border-radius: 8px;
     text-align: left;
+}
+
+
+.light-mode #result {
+    background: #e0e0e0;
 }
 
 #result p {
@@ -89,3 +192,71 @@ button:hover {
     font-weight: bold;
     color: #00d4ff;
 }
+
+
+#theme-toggle {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    background: #2a2a2a;
+    border: none;
+    color: white;
+    padding: 6px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 14px;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease;
+}
+
+#theme-toggle:hover {
+    background: #00d4ff;
+    color: #1c1c1c;
+    transform: scale(1.1);
+}
+
+
+.light-mode {
+    background: #f0f0f0;
+    color: #1c1c1c;
+}
+
+.light-mode .container {
+    background: #ffffff;
+    color: #1c1c1c;
+}
+
+.light-mode input {
+    background: #e0e0e0;
+    color: #1c1c1c;
+}
+
+.light-mode button {
+    background: linear-gradient(135deg, #007bff, #0056b3);
+}
+
+.light-mode #theme-toggle {
+    background: #e0e0e0;
+    color: #007bff;
+}
+
+
+.light-mode .checkbox-container {
+    background: #e0e0e0;
+    color: #1c1c1c;
+}
+
+.light-mode .custom-checkbox {
+    border-color: #007bff;
+}
+
+.light-mode input:checked + .custom-checkbox {
+    background-color: #007bff;
+    border-color: #0056b3;
+}
+

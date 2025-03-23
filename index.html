@@ -37,18 +37,105 @@
     <div class="container">
         <h1>PipPilot</h1>
 
-        <label for="startDate">Start Date:</label>
-        <input type="date" id="startDate">
+        <div class="input-group">
+            <label for="startDate">Start Date:</label>
+            <input type="date" id="startDate">
+        </div>
 
-        <label for="endDate">End Date:</label>
-        <input type="date" id="endDate">
+        <div class="input-group">
+            <label for="endDate">End Date:</label>
+            <input type="date" id="endDate">
+        </div>
 
-        <label for="minDuration">Minimum Duration (days):</label>
-        <input type="number" id="minDuration" value="1">
+        <div class="input-group">
+            <label for="minDuration">Minimum Duration (days):</label>
+            <input type="number" id="minDuration" value="1">
+        </div>
 
-        <label for="maxDuration">Maximum Duration (days):</label>
-        <input type="number" id="maxDuration" value="30">
+        <div class="input-group">
+            <label for="maxDuration">Maximum Duration (days):</label>
+            <input type="number" id="maxDuration" value="30">
+        </div>
 
+        <!-- Forex Pairs Dropdown -->
+        <div class="dropdown">
+            <button class="dropdown-btn" onclick="toggleDropdown()">Select Forex Pairs ⌄</button>
+            <div class="dropdown-content" id="dropdown-content">
+                <div class="checkbox-group">
+                    <label class="checkbox-container">
+                        <input type="checkbox" class="pair-checkbox" value="EUR/USD">
+                        <div class="custom-checkbox"></div>
+                        EUR/USD
+                    </label>
+                    <label class="checkbox-container">
+                        <input type="checkbox" class="pair-checkbox" value="GBP/USD">
+                        <div class="custom-checkbox"></div>
+                        GBP/USD
+                    </label>
+                    <label class="checkbox-container">
+                        <input type="checkbox" class="pair-checkbox" value="XAU/USD">
+                        <div class="custom-checkbox"></div>
+                        XAU/USD
+                    </label>
+                    <label class="checkbox-container">
+                        <input type="checkbox" class="pair-checkbox" value="USD/JPY">
+                        <div class="custom-checkbox"></div>
+                        USD/JPY
+                    </label>
+                    <label class="checkbox-container">
+                        <input type="checkbox" class="pair-checkbox" value="USD/CAD">
+                        <div class="custom-checkbox"></div>
+                        USD/CAD
+                    </label>
+                    <label class="checkbox-container">
+                        <input type="checkbox" class="pair-checkbox" value="AUD/USD">
+                        <div class="custom-checkbox"></div>
+                        AUD/USD
+                    </label>
+                    <label class="checkbox-container">
+                        <input type="checkbox" class="pair-checkbox" value="NZD/USD">
+                        <div class="custom-checkbox"></div>
+                        NZD/USD
+                    </label>
+                    <label class="checkbox-container">
+                        <input type="checkbox" class="pair-checkbox" value="USD/CHF">
+                        <div class="custom-checkbox"></div>
+                        USD/CHF
+                    </label>
+                    <label class="checkbox-container">
+                        <input type="checkbox" class="pair-checkbox" value="EUR/GBP">
+                        <div class="custom-checkbox"></div>
+                        EUR/GBP
+                    </label>
+                    <label class="checkbox-container">
+                        <input type="checkbox" class="pair-checkbox" value="EUR/JPY">
+                        <div class="custom-checkbox"></div>
+                        EUR/JPY
+                    </label>
+                    <label class="checkbox-container">
+                        <input type="checkbox" class="pair-checkbox" value="GBP/JPY">
+                        <div class="custom-checkbox"></div>
+                        GBP/JPY
+                    </label>
+                    <label class="checkbox-container">
+                        <input type="checkbox" class="pair-checkbox" value="AUD/JPY">
+                        <div class="custom-checkbox"></div>
+                        AUD/JPY
+                    </label>
+                    <label class="checkbox-container">
+                        <input type="checkbox" class="pair-checkbox" value="CAD/JPY">
+                        <div class="custom-checkbox"></div>
+                        CAD/JPY
+                    </label>
+                    <label class="checkbox-container">
+                        <input type="checkbox" class="pair-checkbox" value="NZD/JPY">
+                        <div class="custom-checkbox"></div>
+                        NZD/JPY
+                    </label>
+                </div>
+            </div>
+        </div>
+        
         <button onclick="generateRandom()">Generate</button>
 
         <div id="result">
@@ -58,8 +145,58 @@
         </div>
 
         <button id="installBtn" onclick="installPWA()" style="display: none;">Install App</button>
+        <button id="theme-toggle">🌙 </button>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        function toggleDropdown() {
+            document.getElementById("dropdown-content").classList.toggle("show");
+        }
+
+        window.onclick = function(event) {
+            if (!event.target.matches('.dropdown-btn')) {
+                let dropdowns = document.getElementsByClassName("dropdown-content");
+                for (let i = 0; i < dropdowns.length; i++) {
+                    let openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        };
+
+        document.getElementById("theme-toggle").addEventListener("click", function () {
+            document.body.classList.toggle("light-mode");
+        });
+
+        function generateRandom() {
+            let minDuration = parseInt(document.getElementById("minDuration").value);
+            let maxDuration = parseInt(document.getElementById("maxDuration").value);
+            let startDate = new Date(document.getElementById("startDate").value);
+            let endDate = new Date(document.getElementById("endDate").value);
+
+            if (isNaN(startDate) || isNaN(endDate)) {
+                alert("Please select a valid start and end date.");
+                return;
+            }
+
+            let randomTime = startDate.getTime() + Math.random() * (endDate.getTime() - startDate.getTime());
+            let randomDate = new Date(randomTime).toISOString().split('T')[0];
+
+            let randomDuration = Math.floor(Math.random() * (maxDuration - minDuration + 1)) + minDuration;
+
+            let checkedPairs = document.querySelectorAll(".pair-checkbox:checked");
+            if (checkedPairs.length === 0) {
+                alert("Please select at least one forex pair.");
+                return;
+            }
+
+            let randomPair = checkedPairs[Math.floor(Math.random() * checkedPairs.length)].value;
+
+            document.getElementById("randomDate").innerHTML = "Random Date: " + randomDate;
+            document.getElementById("randomDuration").innerHTML = "Random Duration: " + randomDuration + " days";
+            document.getElementById("randomPair").innerHTML = "Forex Pair: " + randomPair;
+        }
+    </script>
 </body>
 </html>
