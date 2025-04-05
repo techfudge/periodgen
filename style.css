@@ -260,3 +260,21 @@ button:hover {
     border-color: #0056b3;
 }
 
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    background: #1c1c1c;
+    padding: 10px 0;
+    font-size: 13px;
+    color: #888;
+    border-top: 1px solid #333;
+}
+
+.light-mode .footer {
+    background: #f0f0f0;
+    color: #555;
+    border-top: 1px solid #ccc;
+}
+
